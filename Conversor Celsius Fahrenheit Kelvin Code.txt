@@ -1,0 +1,155 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Conversor_Celsius_Fahrenheit_Kelvin
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        //Declaração das constantes
+        //Aprendi que se isso ficar em cima da partial class Form1 o programa não inicializa
+        //Valeu a Pena.
+        public class Constantes
+        {
+            public const double celsiusToKelvinVlr = 273;
+        }
+
+        private void btnConverter_Click(object sender, EventArgs e)
+        {
+            //Declaração variáveis de entrada e saída
+            Double entradaCelsius, entradaFah, entradaKelvin, saidaCelsius, saidaFah, saidaKelvin;
+            //
+            //
+            //
+            //Passando os valores das txtBox para as variaveis
+            //Conversão para Double.
+            //
+            //CHECAGEM DE CAMPOS VAZIOS E EXECUÇÃO DE CÁLCULOS
+            //
+            //Checa se apenas o campo Celsius está preenchido
+            if ((txtCelsius.Text.Trim().ToString()) != "" && (txtFah.Text.Trim().ToString()) == "" && (txtKelvin.Text.Trim().ToString()) == "") {
+                Double K;
+                Double C;
+                Double F;
+                Double CF;
+                Double CFF;
+
+                entradaCelsius = Convert.ToDouble(txtCelsius.Text);
+
+                //Convertendo Celsius para Kelvin
+                C = entradaCelsius;
+                K = C + Constantes.celsiusToKelvinVlr;
+
+                //Convertendo Celsius para Fah
+                CF = C / 5;
+                CFF = (9 * CF);
+                F = CFF + 32;
+
+                //Saidas
+                saidaCelsius = C;
+                saidaFah = F;
+                saidaKelvin = K;
+                //Nesse momento eu comecei a chorar, pq não podia testar e tinha certeza que ia dar merda
+                //
+                txtKelvin.Text = Convert.ToString(saidaKelvin);
+                txtFah.Text = Convert.ToString(saidaFah);
+                txtCelsius.Text = Convert.ToString(saidaCelsius);
+
+            }//Fechamento Chaves TXTCELSIUS
+
+            else if ((txtFah.Text.Trim().ToString()) != "" && (txtCelsius.Text.Trim().ToString()) == "" && (txtKelvin.Text.Trim().ToString() == ""))
+            {
+                Double C;
+                Double F;
+                Double K;
+                Double CF;
+                Double CFF;
+
+                entradaFah = Convert.ToDouble(txtFah.Text);
+                F = entradaFah;
+
+                //Celsius para Fah
+                CFF = F - 32;
+                CF = CFF / 9;
+                C = CF * 5;
+
+                //Celsius para Kelvin
+                K = C + Constantes.celsiusToKelvinVlr;
+
+
+                saidaCelsius = C;
+                saidaFah = F;
+                saidaKelvin = K;
+
+                txtKelvin.Text = Convert.ToString(saidaKelvin);
+                txtFah.Text = Convert.ToString(saidaFah);
+                txtCelsius.Text = Convert.ToString(saidaCelsius);
+
+            } //FECHAMENTO FAH
+
+            else if ((txtKelvin.Text.Trim().ToString()) != "" && (txtFah.Text.Trim().ToString()) == "" && (txtCelsius.Text.Trim().ToString()) == ""){
+                Double C;
+                Double F;
+                Double K;
+                Double CF;
+                Double CFF;
+
+                entradaKelvin = Convert.ToDouble(txtKelvin.Text);
+                K = entradaKelvin;
+
+                //Convertendo Kelvin pra Celsius
+                C = K - Constantes.celsiusToKelvinVlr;
+
+                //Convertendo Celsius para Fah
+                CF = C / 5;
+                CFF = (9 * CF);
+                F = CFF + 32;
+
+                saidaCelsius = C;
+                saidaFah = F;
+                saidaKelvin = K;
+
+                txtKelvin.Text = Convert.ToString(saidaKelvin);
+                txtFah.Text = Convert.ToString(saidaFah);
+                txtCelsius.Text = Convert.ToString(saidaCelsius);
+
+            }//FECHAMENTO KELVIN
+
+            else
+            {
+                MessageBox.Show("Você precisa escolher apenas um campo","Erro 001",MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                txtFah.Text = "";
+                txtKelvin.Text = "";
+                txtCelsius.Text = "";
+
+
+            }
+        }
+
+
+        //Cliquei sem querer, ainda sem uso...
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        //Função para limpar os campos
+        private void btnLimpar_Click(object sender, EventArgs e)
+        {
+            txtKelvin.Text = "";
+            txtCelsius.Text = "";
+            txtFah.Text = "";
+        }
+    }
+}

@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using MySql.Data.MySqlClient;
+
+namespace Sistema_de_Cadastro_MySQL
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string cadastro1 = txtCadastro1.Text;
+            string cadastro2 = txtCadastro2.Text;
+            string senha = txtSenha.Text;
+            string CONFIG = "server=localhost;userid=root;pwd=toor;database=testedb";
+
+
+            MySqlConnection Conexao = new MySqlConnection(CONFIG);
+            MySqlCommand Query = new MySqlCommand();
+            Query.Connection = Conexao;
+            Conexao.Open();
+            Query.CommandText = "INSERT INTO exemplo(cadastro1, cadastro2, senha) VALUES (@cadastro1, @cadastro2, MD5('@senha'))";
+            Query.Parameters.AddWithValue("@cadastro1", cadastro1);
+            Query.Parameters.AddWithValue("@cadastro2", cadastro2);
+            Query.Parameters.AddWithValue("@senha", senha);
+            Query.ExecuteNonQuery();
+            Conexao.Close();
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
